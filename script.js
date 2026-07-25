@@ -1,8 +1,6 @@
+
 const button = document.querySelector("button");
 
-
-button.addEventListener("click", function(){
-
-    alert("Let's create your blanket!");
-
+button.addEventListener("click", () => {
+    window.location.href = "create.html";
 });
