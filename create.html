@@ -4,77 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Blanket | WovenDays</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
     <div class="container">
-
         <div class="header">
             <img src="assets/Object.png" alt="WovenDays Logo" class="logo">
             <h1>Create Your Blanket</h1>
         </div>
 
         <form id="blanketForm">
-
             <label for="projectName">Project Name</label>
-            <input
-                type="text"
-                id="projectName"
-                placeholder="e.g. 2027 Mood Blanket"
-            >
+            <input type="text" id="projectName" placeholder="e.g. 2026 Mood Blanket" required>
 
             <label for="blanketType">Blanket Type</label>
-
-            <select id="blanketType">
-
+            <select id="blanketType" required>
                 <option value="">Choose one</option>
-
-                <option>Temperature Blanket</option>
-
-                <option>Mood Blanket</option>
-
-                <option>Reading Blanket</option>
-
-                <option>Fitness Blanket</option>
-
-                <option>Hydration Blanket</option>
-
-                <option>Custom Blanket</option>
-
+                <option value="Temperature">Temperature Blanket</option>
+                <option value="Mood">Mood Blanket</option>
+                <option value="Reading">Reading Blanket</option>
+                <option value="Fitness">Fitness Blanket</option>
+                <option value="Hydration">Hydration Blanket</option>
+                <option value="Custom">Custom Blanket</option>
             </select>
 
             <label for="width">Blanket Width (stitches)</label>
-
-            <input
-                type="number"
-                id="width"
-                placeholder="120"
-            >
+            <input type="number" id="width" placeholder="120" min="10" max="500" required>
 
             <label for="startDate">Start Date</label>
-
-            <input
-                type="date"
-                id="startDate"
-            >
+            <input type="date" id="startDate" required>
 
             <label for="endDate">End Date</label>
+            <input type="date" id="endDate" required>
 
-            <input
-                type="date"
-                id="endDate"
-            >
-
-            <button type="submit">
-                Continue
-            </button>
-
+            <button type="submit">Continue to Color Legend →</button>
         </form>
-
     </div>
 
+    <script src="create.js"></script>
 </body>
 </html>
