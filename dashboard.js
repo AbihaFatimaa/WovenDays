@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const logForm = document.getElementById("logForm");
     const canvas = document.getElementById("blanketCanvas");
     const ctx = canvas.getContext("2d");
+    const canvasWrapper = canvas.parentElement;
 
     const todayStr = new Date().toISOString().split("T")[0];
     logDateInput.value = todayStr;
@@ -79,9 +80,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const end = new Date(project.endDate);
         const totalDays = Math.max(1, Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1);
 
-        const canvasWidth = 360;
-        const rowHeight = Math.max(4, Math.min(14, Math.floor(520 / totalDays)));
-        const canvasHeight = totalDays * rowHeight;
+        const wrapperStyles = canvasWrapper ? window.getComputedStyle(canvasWrapper) : null;
+        const wrapperPaddingX = wrapperStyles ? (parseFloat(wrapperStyles.paddingLeft) + parseFloat(wrapperStyles.paddingRight)) : 0;
+        const wrapperPaddingY = wrapperStyles ? (parseFloat(wrapperStyles.paddingTop) + parseFloat(wrapperStyles.paddingBottom)) : 0;
+
+        const canvasWidth = Math.max(280, Math.floor((canvasWrapper?.clientWidth || 400) - wrapperPaddingX));
+        const canvasHeight = Math.max(560, Math.floor((canvasWrapper?.clientHeight || 620) - wrapperPaddingY));
+        const rowHeight = canvasHeight / totalDays;
 
         canvas.width = canvasWidth;
         canvas.height = canvasHeight;
@@ -102,11 +107,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 const matched = matchColor(logEntry.val);
                 if (matched) {
                     ctx.fillStyle = matched.color;
-                    ctx.fillRect(0, y, canvasWidth, rowHeight);
+                    ctx.fillRect(0, y, canvasWidth, Math.ceil(rowHeight));
                     
                     // Texture overlay line for yarn stitch simulation
-                    ctx.fillStyle = "rgba(0,0,0,0.06)";
-                    ctx.fillRect(0, y + rowHeight - 1, canvasWidth, 1);
+                    if (rowHeight >= 2) {
+                        ctx.fillStyle = "rgba(0,0,0,0.06)";
+                        ctx.fillRect(0, y + rowHeight - 1, canvasWidth, 1);
+                    }
                     loggedCount++;
                 }
             } else {
@@ -244,6 +251,47 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "create.html";
         }
     });
+
+    document.getElementById("demoDataBtn")?.addEventListener("click", () => {
+        const start = new Date(project.startDate);
+        const end = new Date(project.endDate);
+        const totalDays = Math.max(1, Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1);
+        const hasNumericRanges = project.legend.some(item => item.min !== null || item.max !== null);
+
+        project.logs = {};
+
+        for (let i = 0; i < totalDays; i++) {
+            const currentDate = new Date(start);
+            currentDate.setDate(start.getDate() + i);
+            const dateStr = currentDate.toISOString().split("T")[0];
+            const rule = project.legend[Math.floor(Math.random() * project.legend.length)];
+
+            let val;
+            if (hasNumericRanges) {
+                const min = Number.isFinite(parseFloat(rule.min)) ? parseFloat(rule.min) : 0;
+                const max = Number.isFinite(parseFloat(rule.max)) ? parseFloat(rule.max) : min + 10;
+                const low = Math.min(min, max);
+                const high = Math.max(min, max);
+                val = (Math.random() * (high - low) + low).toFixed(1);
+            } else {
+                val = rule.id || rule.label;
+            }
+
+            project.logs[dateStr] = { val, timestamp: Date.now() };
+        }
+
+        localStorage.setItem("wovenDays_currentProject", JSON.stringify(project));
+
+        const selectedDate = logDateInput.value || todayStr;
+        const selectedLog = project.logs[selectedDate]?.val || "";
+        const input = document.getElementById("dailyValue");
+        if (input) input.value = selectedLog;
+
+        renderBlanket();
+        updateInstructionForDate(selectedDate);
+    });
+
+    window.addEventListener("resize", renderBlanket);
 
     renderLogInput();
     renderBlanket();
