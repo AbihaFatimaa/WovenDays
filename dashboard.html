@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | WovenDays</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-brand">
+            <img src="assets/Object.png" alt="WovenDays logo" class="logo">
+            <span id="navProjectTitle">WovenDays</span>
+        </div>
+        <div class="nav-actions">
+            <button id="exportImgBtn" class="btn-ghost">🖼️ Export Blanket Image</button>
+            <button id="printInstructionsBtn" class="btn-ghost">🖨️ Print Instructions</button>
+            <button id="backupBtn" class="btn-ghost">💾 Backup JSON</button>
+            <button id="resetBtn" class="btn-ghost danger">New Blanket</button>
+        </div>
+    </header>
+
+    <div class="dashboard-grid">
+        <!-- Left Sidebar: Logging, Instructions, Stats -->
+        <div class="dashboard-sidebar">
+            <div class="card">
+                <h3>Log Daily Data</h3>
+                <form id="logForm">
+                    <div class="form-group">
+                        <label for="logDate">Select Date</label>
+                        <input type="date" id="logDate" required>
+                    </div>
+                    <div class="form-group" id="logInputContainer"></div>
+                    <button type="submit" class="btn-primary">Save Entry</button>
+                </form>
+            </div>
+
+            <div class="card instruction-card">
+                <span class="badge" id="dayBadge">Day 1</span>
+                <h3>Today's Instruction</h3>
+                <div class="color-swatch-box" id="instructionSwatch">
+                    <div class="swatch-circle" id="swatchCircle"></div>
+                    <div>
+                        <strong id="instructionColorName">Select a value above</strong>
+                        <p class="subtext" id="instructionDetails">Log your entry to see yarn instructions.</p>
+                    </div>
+                </div>
+                <div class="instruction-text-box" id="instructionText">
+                    Enter today's data to calculate your row instruction.
+                </div>
+            </div>
+
+            <div class="card stats-card">
+                <h3>Progress</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progressFill" style="width: 0%;"></div>
+                </div>
+                <div class="stats-grid">
+                    <div>
+                        <span class="stat-number" id="statCompleted">0</span>
+                        <span class="stat-label">Rows Done</span>
+                    </div>
+                    <div>
+                        <span class="stat-number" id="statRemaining">0</span>
+                        <span class="stat-label">Remaining</span>
+                    </div>
+                    <div>
+                        <span class="stat-number" id="statPercent">0%</span>
+                        <span class="stat-label">Complete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Main: Blanket Canvas -->
+        <div class="dashboard-main">
+            <div class="card blanket-card">
+                <div class="blanket-card-header">
+                    <h2>Blanket Visualizer</h2>
+                    <span class="subtext" id="blanketDimensions">120 stitches wide</span>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="blanketCanvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Printable Instructions View -->
+    <div id="printableArea" class="printable-only">
+        <div class="print-header">
+            <h1 id="printProjectTitle">Project Instructions</h1>
+            <p id="printProjectMeta"></p>
+        </div>
+        <div id="printLegend" class="print-legend-grid"></div>
+        <table class="print-table">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Date</th>
+                    <th>Logged Value</th>
+                    <th>Yarn Color</th>
+                    <th>Crochet Instruction</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="printTableBody"></tbody>
+        </table>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

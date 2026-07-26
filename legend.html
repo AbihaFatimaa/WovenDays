@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Legend | WovenDays</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container container-wide">
+        <div class="header">
+            <img src="assets/Object.png" alt="WovenDays logo" class="logo">
+            <div>
+                <h1 id="legendHeading">Define Color Legend</h1>
+                <p class="subtitle">Assign a yarn color to each value or range.</p>
+            </div>
+        </div>
+
+        <form id="legendForm">
+            <div id="legendRows" class="legend-rows-container"></div>
+
+            <button type="button" id="addRowBtn" class="btn-secondary">+ Add Color Rule</button>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Finish & Launch Dashboard →</button>
+            </div>
+        </form>
+    </div>
+    <script src="legend.js"></script>
+</body>
+</html>

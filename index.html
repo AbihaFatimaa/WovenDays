@@ -1,41 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>WovenDays</title>
-
+    <title>WovenDays | Crochet Your Year</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
     <main class="hero">
-
-       <h1>
-    <img src="assets/Object.png" alt="WovenDays logo" class="logo">
-    WovenDays
-</h1>
-        <h2>
-            Crochet your year,
-            one row at a time.
-        </h2>
-
-        <p>
-            Transform your daily moments into
-            a beautiful crochet blanket.
-        </p>
-
-        <button>
-            Create New Blanket
-        </button>
-
+        <h1>
+            <img src="assets/Object.png" alt="WovenDays logo" class="logo">
+            <span>WovenDays</span>
+        </h1>
+        <h2>Crochet your year, one row at a time.</h2>
+        <p>Transform your daily moments into a beautiful, data-driven crochet blanket.</p>
+        <button id="startBtn" class="btn-primary">Create New Blanket</button>
     </main>
-
-    <script src="script.js"></script>
-
+    <script>
+        document.getElementById("startBtn").addEventListener("click", () => {
+            window.location.href = "create.html";
+        });
+    </script>
 </body>
-
 </html>
