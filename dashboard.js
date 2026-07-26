@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateInstructionForDate(dateStr);
     });
 
-    document.getElementById("backupBtn").addEventListener("click", () => {
+    /*document.getElementById("backupBtn").addEventListener("click", () => {
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(project, null, 2));
         const anchor = document.createElement("a");
         anchor.setAttribute("href", dataStr);
@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.appendChild(anchor);
         anchor.click();
         anchor.remove();
-    });
+    });*/
 
     document.getElementById("resetBtn").addEventListener("click", () => {
         if (confirm("Start a new blanket? Make sure you backed up your data first!")) {

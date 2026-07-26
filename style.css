@@ -160,10 +160,13 @@ input:focus, select:focus {
 }
 
 /* Legend Builder Styles */
+/* Legend Builder Styles & Overflow Fixes */
 .legend-rows-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
+    width: 100%;
+    max-width: 100%;
 }
 
 .legend-row {
@@ -171,25 +174,30 @@ input:focus, select:focus {
     align-items: center;
     gap: 10px;
     background: #FCF8F8;
-    padding: 10px 14px;
+    padding: 12px;
     border-radius: 12px;
     border: 1px solid #EFE4E6;
+    width: 100%;
+    box-sizing: border-border-box;
+    flex-wrap: wrap; /* Prevents controls from overflowing on small screens or high row counts */
 }
 
 .legend-row input[type="color"] {
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
     padding: 2px;
-    border: none;
+    border: 1px solid #D1C0C4;
     border-radius: 8px;
     cursor: pointer;
-    background: transparent;
+    background: white;
 }
 
 .legend-row input[type="text"],
 .legend-row input[type="number"] {
-    flex: 1;
-    padding: 8px 10px;
+    flex: 1 1 120px; /* Allows inputs to shrink and wrap cleanly if needed */
+    min-width: 0;   /* Fixes CSS flexbox text overflow bug */
+    padding: 10px 12px;
 }
 
 .remove-btn {
@@ -197,10 +205,23 @@ input:focus, select:focus {
     color: white;
     border: none;
     border-radius: 50%;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
     font-size: 16px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.remove-btn:hover {
+    background: #C0392B;
+}
+
+.form-actions {
+    margin-top: 10px;
 }
 
 /* Dashboard Layout */
