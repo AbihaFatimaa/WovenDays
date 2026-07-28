@@ -48,6 +48,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("blanketCanvas");
     const ctx = canvas.getContext("2d");
     const canvasWrapper = canvas.parentElement;
+    const replayWeaveBtn = document.getElementById("replayWeaveBtn");
+
+    let replayAnimationId = null;
+    let isReplaying = false;
 
     const todayStr = new Date().toISOString().split("T")[0];
     logDateInput.value = todayStr;
@@ -107,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return null;
     }
 
-    function renderBlanket() {
+    function drawBlanketFrame(revealCount) {
         const start = new Date(project.startDate);
         const end = new Date(project.endDate);
         const totalDays = Math.max(1, Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1);
@@ -136,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const logEntry = project.logs[dateStr];
             const y = i * rowHeight;
 
-            if (logEntry) {
+            if (i < revealCount && logEntry) {
                 const matched = matchColor(logEntry.val);
                 if (matched) {
                     ctx.fillStyle = matched.color;
@@ -149,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                     loggedCount++;
                 }
-            } else {
+            } else if (i < revealCount) {
                 // Empty row grid guideline
                 ctx.fillStyle = "#EFE6D8";
                 ctx.fillRect(0, y, canvasWidth, 1);
@@ -163,6 +167,47 @@ document.addEventListener("DOMContentLoaded", () => {
         const percent = Math.round((loggedCount / totalDays) * 100);
         document.getElementById("statPercent").textContent = `${percent}%`;
         document.getElementById("progressFill").style.width = `${percent}%`;
+
+        return { totalDays, loggedCount };
+    }
+
+    function renderBlanket() {
+        drawBlanketFrame(Math.max(1, Math.ceil((new Date(project.endDate) - new Date(project.startDate)) / (1000 * 60 * 60 * 24)) + 1));
+    }
+
+    function replayBlanket() {
+        if (!replayWeaveBtn || isReplaying) {
+            return;
+        }
+
+        const start = new Date(project.startDate);
+        const end = new Date(project.endDate);
+        const totalDays = Math.max(1, Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1);
+        let revealCount = 0;
+
+        isReplaying = true;
+        replayWeaveBtn.disabled = true;
+        replayWeaveBtn.textContent = "Replaying...";
+
+        const step = Math.max(1, Math.ceil(totalDays / 45));
+
+        const tick = () => {
+            revealCount = Math.min(totalDays, revealCount + step);
+            drawBlanketFrame(revealCount);
+
+            if (revealCount < totalDays) {
+                replayAnimationId = window.requestAnimationFrame(tick);
+                return;
+            }
+
+            isReplaying = false;
+            replayWeaveBtn.disabled = false;
+            replayWeaveBtn.textContent = "Replay Weave";
+            replayAnimationId = null;
+            drawBlanketFrame(totalDays);
+        };
+
+        tick();
     }
 
     function updateInstructionForDate(dateStr) {
@@ -248,6 +293,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         window.print();
     });
+
+    replayWeaveBtn?.addEventListener("click", replayBlanket);
 
     logDateInput.addEventListener("change", (e) => {
         const val = project.logs[e.target.value]?.val || "";

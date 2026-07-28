@@ -125,3 +125,44 @@ function wovendaysDeleteProject(projectId) {
 
     return projects;
 }
+
+function wovendaysCreateDemoProject() {
+    const today = new Date();
+    const endDate = new Date(today);
+    const startDate = new Date(today);
+    startDate.setDate(today.getDate() - 59);
+
+    const legend = [
+        { id: "color_1", color: "#A86C53", label: "Steady", min: null, max: null },
+        { id: "color_2", color: "#D6A37B", label: "Busy", min: null, max: null },
+        { id: "color_3", color: "#E7C3A2", label: "Calm", min: null, max: null },
+        { id: "color_4", color: "#6B4130", label: "Focused", min: null, max: null }
+    ];
+
+    const project = {
+        id: `wovendays_demo_${Date.now()}`,
+        name: "Demo Mood Blanket",
+        type: "Mood",
+        width: 120,
+        startDate: startDate.toISOString().split("T")[0],
+        endDate: endDate.toISOString().split("T")[0],
+        legend,
+        logs: {},
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+    };
+
+    const values = legend.map((item) => item.id);
+    for (let i = 0; i < 60; i++) {
+        const currentDate = new Date(startDate);
+        currentDate.setDate(startDate.getDate() + i);
+        const dateStr = currentDate.toISOString().split("T")[0];
+        project.logs[dateStr] = {
+            val: values[i % values.length],
+            timestamp: Date.now() - ((59 - i) * 86400000)
+        };
+    }
+
+    wovendaysSaveProject(project);
+    return project;
+}

@@ -19,6 +19,7 @@
             <p>Plan a blanket, assign meaningful color rules, and log each day that grows row by row.</p>
             <div class="hero-actions">
                 <button id="startBtn" class="btn-primary">Create New Blanket</button>
+                <button id="demoBtn" class="btn-secondary">Try Demo Project</button>
                 <a class="btn-link" href="create.html#how-it-works">See how it works</a>
             </div>
             <div class="hero-metrics">
@@ -103,6 +104,13 @@
 
         document.getElementById("startBtn").addEventListener("click", () => {
             window.location.href = "create.html";
+        });
+
+        document.getElementById("demoBtn").addEventListener("click", () => {
+            if (typeof wovendaysCreateDemoProject === "function") {
+                wovendaysCreateDemoProject();
+                window.location.href = "dashboard.html";
+            }
         });
     </script>
 </body>
