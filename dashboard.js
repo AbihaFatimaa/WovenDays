@@ -1,14 +1,46 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const projectRaw = localStorage.getItem("wovenDays_currentProject");
-    if (!projectRaw) {
+    const project = typeof wovendaysGetCurrentProject === "function"
+        ? wovendaysGetCurrentProject()
+        : JSON.parse(localStorage.getItem("wovenDays_currentProject"));
+
+    if (!project) {
         window.location.href = "create.html";
         return;
     }
 
-    const project = JSON.parse(projectRaw);
+    const projects = typeof wovendaysReadProjects === "function" ? wovendaysReadProjects() : [project];
+    const projectSwitcher = document.getElementById("projectSwitcher");
 
-    document.getElementById("navProjectTitle").textContent = project.name;
+    document.getElementById("dashboardProjectTitle").textContent = project.name;
     document.getElementById("blanketDimensions").textContent = `${project.width} stitches wide`;
+    document.getElementById("dashboardDimensions").textContent = `${project.width} stitches wide`;
+    document.getElementById("dashboardProjectType").textContent = `${project.type} blanket | ${project.startDate} to ${project.endDate}`;
+    document.getElementById("dashboardRange").textContent = `${project.startDate} to ${project.endDate}`;
+    document.getElementById("dashboardTypeBadge").textContent = `${project.type} blanket`;
+
+    function populateProjectSwitcher() {
+        if (!projectSwitcher) {
+            return;
+        }
+
+        projectSwitcher.innerHTML = projects.map((item) => `
+            <option value="${item.id}" ${item.id === project.id ? "selected" : ""}>
+                ${item.name}
+            </option>
+        `).join("");
+    }
+
+    projectSwitcher?.addEventListener("change", (event) => {
+        const selected = typeof wovendaysSetCurrentProject === "function"
+            ? wovendaysSetCurrentProject(event.target.value)
+            : null;
+
+        if (selected) {
+            window.location.reload();
+        }
+    });
+
+    populateProjectSwitcher();
 
     const logDateInput = document.getElementById("logDate");
     const logInputContainer = document.getElementById("logInputContainer");
@@ -79,6 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const start = new Date(project.startDate);
         const end = new Date(project.endDate);
         const totalDays = Math.max(1, Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1);
+        document.getElementById("dashboardRange").textContent = `${project.startDate} to ${project.endDate}`;
 
         const wrapperStyles = canvasWrapper ? window.getComputedStyle(canvasWrapper) : null;
         const wrapperPaddingX = wrapperStyles ? (parseFloat(wrapperStyles.paddingLeft) + parseFloat(wrapperStyles.paddingRight)) : 0;
@@ -229,7 +262,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const val = document.getElementById("dailyValue").value;
 
         project.logs[dateStr] = { val: val, timestamp: Date.now() };
-        localStorage.setItem("wovenDays_currentProject", JSON.stringify(project));
+        if (typeof wovendaysSaveProject === "function") {
+            wovendaysSaveProject(project);
+        } else {
+            localStorage.setItem("wovenDays_currentProject", JSON.stringify(project));
+        }
 
         renderBlanket();
         updateInstructionForDate(dateStr);
@@ -246,10 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });*/
 
     document.getElementById("resetBtn").addEventListener("click", () => {
-        if (confirm("Start a new blanket? Make sure you backed up your data first!")) {
-            localStorage.removeItem("wovenDays_currentProject");
-            window.location.href = "create.html";
-        }
+        window.location.href = "create.html";
     });
 
     document.getElementById("demoDataBtn")?.addEventListener("click", () => {
@@ -280,7 +314,11 @@ document.addEventListener("DOMContentLoaded", () => {
             project.logs[dateStr] = { val, timestamp: Date.now() };
         }
 
-        localStorage.setItem("wovenDays_currentProject", JSON.stringify(project));
+        if (typeof wovendaysSaveProject === "function") {
+            wovendaysSaveProject(project);
+        } else {
+            localStorage.setItem("wovenDays_currentProject", JSON.stringify(project));
+        }
 
         const selectedDate = logDateInput.value || todayStr;
         const selectedLog = project.logs[selectedDate]?.val || "";

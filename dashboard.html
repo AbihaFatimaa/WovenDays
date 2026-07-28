@@ -6,24 +6,51 @@
     <title>Dashboard | WovenDays</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="dashboard-page">
     <header class="navbar">
-        <div class="nav-brand">
+        <a class="nav-brand" href="index.html" aria-label="Go to WovenDays home">
             <img src="assets/Object.png" alt="WovenDays logo" class="logo">
-            <span id="navProjectTitle">WovenDays</span>
+            <span>WovenDays</span>
+        </a>
+        <div class="project-switcher">
+            <label for="projectSwitcher">Project</label>
+            <select id="projectSwitcher"></select>
         </div>
         <div class="nav-actions">
             <button id="exportImgBtn" class="btn-ghost">🖼️ Export Blanket Image</button>
             <button id="printInstructionsBtn" class="btn-ghost">🖨️ Print Instructions</button>
-            <button id="resetBtn" class="btn-ghost danger">New Blanket</button>
+            <button id="resetBtn" class="btn-ghost danger">New Project</button>
         </div>
     </header>
 
-    <div class="dashboard-grid">
+    <div class="dashboard-shell">
+        <section class="dashboard-hero glass-panel">
+            <div class="dashboard-hero-copy">
+                <span class="eyebrow">Current project</span>
+                <h1 id="dashboardProjectTitle">WovenDays</h1>
+                <p id="dashboardProjectType">Blanket setup ready.</p>
+                <div class="dashboard-hero-meta">
+                    <span class="pill" id="dashboardDimensions">120 stitches wide</span>
+                    <span class="pill subtle" id="dashboardRange">Dates pending</span>
+                    <span class="pill subtle" id="dashboardTypeBadge">Visual tracker</span>
+                </div>
+            </div>
+            <div class="dashboard-hero-actions">
+                <button id="exportImgBtn" class="btn-ghost">Export Image</button>
+                <button id="printInstructionsBtn" class="btn-ghost">Print Instructions</button>
+                <button id="resetBtn" class="btn-ghost danger">New Project</button>
+            </div>
+        </section>
+
+        <div class="dashboard-grid">
         <!-- Left Sidebar: Logging, Instructions, Stats -->
         <div class="dashboard-sidebar">
-            <div class="card">
-                <h3>Log Daily Data</h3>
+            <div class="card card-accent">
+                <div class="card-header-row">
+                    <h3>Log Daily Data</h3>
+                    <span class="badge badge-inline" id="dayBadge">Day 1</span>
+                </div>
+                <p class="card-help">Pick a date, enter the matching value, and save. The canvas updates immediately after each entry.</p>
                 <form id="logForm">
                     <div class="form-group">
                         <label for="logDate">Select Date</label>
@@ -39,7 +66,6 @@
             </div>
 
             <div class="card instruction-card">
-                <span class="badge" id="dayBadge">Day 1</span>
                 <h3>Today's Instruction</h3>
                 <div class="color-swatch-box" id="instructionSwatch">
                     <div class="swatch-circle" id="swatchCircle"></div>
@@ -54,7 +80,10 @@
             </div>
 
             <div class="card stats-card">
-                <h3>Progress</h3>
+                <div class="card-header-row">
+                    <h3>Progress</h3>
+                    <span class="subtext">Auto-updates from your log</span>
+                </div>
                 <div class="progress-bar-container">
                     <div class="progress-bar-fill" id="progressFill" style="width: 0%;"></div>
                 </div>
@@ -87,6 +116,7 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
 
     <!-- Printable Instructions View -->
@@ -111,6 +141,7 @@
         </table>
     </div>
 
+    <script src="projectStore.js"></script>
     <script src="dashboard.js"></script>
 </body>
 </html>

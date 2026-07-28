@@ -6,50 +6,81 @@
     <title>Create Blanket | WovenDays</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="container">
-        <div class="header">
+<body class="setup-page">
+    <header class="site-masthead">
+        <a class="site-brand" href="index.html">
             <img src="assets/Object.png" alt="WovenDays logo" class="logo">
-            <h1>Create Your Blanket</h1>
-        </div>
+            <span class="brand-mark">WovenDays</span>
+        </a>
+    </header>
+    <div class="page-shell">
+        <aside class="setup-rail glass-panel">
+            <span class="eyebrow">Step 1 of 3</span>
+            <h1>Create your blanket</h1>
+            <p>Choose the project details now. The next screen will prefill a color legend based on the blanket type you pick.</p>
 
-        <form id="blanketForm">
-            <div class="form-group">
-                <label for="projectName">Project Name</label>
-                <input type="text" id="projectName" placeholder="e.g. 2026 Mood Blanket" required>
+            <div class="stepper">
+                <div class="stepper-item active"><span>1</span><div><strong>Project details</strong><p>Name, type, width, and dates.</p></div></div>
+                <div class="stepper-item"><span>2</span><div><strong>Color legend</strong><p>Map values to yarn colors.</p></div></div>
+                <div class="stepper-item"><span>3</span><div><strong>Dashboard</strong><p>Log rows and watch it grow.</p></div></div>
             </div>
 
-            <div class="form-group">
-                <label for="blanketType">Blanket Type</label>
-                <select id="blanketType" required>
-                    <option value="">Choose blanket type...</option>
-                    <option value="Temperature">Temperature Blanket</option>
-                    <option value="Mood">Mood Blanket</option>
-                    <option value="Reading">Reading Blanket</option>
-                    <option value="Fitness">Fitness Blanket</option>
-                    <option value="Hydration">Hydration Blanket</option>
-                    <option value="Custom">Custom Blanket</option>
-                </select>
+            <div id="how-it-works" class="rail-note">
+                <strong>Tip</strong>
+                <p>Use a blanket type that matches the data you want to log most often. That keeps the legend simple and the dashboard easier to use.</p>
+            </div>
+        </aside>
+
+        <section class="setup-card glass-panel">
+            <div class="header header-stack">
+                <div>
+                    <span class="eyebrow">Setup</span>
+                    <h1>Create Your Blanket</h1>
+                    <p class="subtitle">Start with the basics. You can refine the yarn rules on the next screen.</p>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="width">Blanket Width (stitches)</label>
-                <input type="number" id="width" placeholder="120" min="10" max="500" value="120" required>
-            </div>
+            <form id="blanketForm">
+                <div class="form-group">
+                    <label for="projectName">Project Name</label>
+                    <input type="text" id="projectName" placeholder="e.g. 2026 Mood Blanket" required>
+                </div>
 
-            <div class="form-group">
-                <label for="startDate">Start Date</label>
-                <input type="date" id="startDate" required>
-            </div>
+                <div class="form-group">
+                    <label for="blanketType">Blanket Type</label>
+                    <select id="blanketType" required>
+                        <option value="">Choose blanket type...</option>
+                        <option value="Temperature">Temperature Blanket</option>
+                        <option value="Mood">Mood Blanket</option>
+                        <option value="Reading">Reading Blanket</option>
+                        <option value="Fitness">Fitness Blanket</option>
+                        <option value="Hydration">Hydration Blanket</option>
+                        <option value="Custom">Custom Blanket</option>
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label for="endDate">End Date</label>
-                <input type="date" id="endDate" required>
-            </div>
+                <div class="form-group">
+                    <label for="width">Blanket Width (stitches)</label>
+                    <input type="number" id="width" placeholder="120" min="10" max="500" value="120" required>
+                </div>
 
-            <button type="submit" class="btn-primary">Continue to Color Legend →</button>
-        </form>
+                <div class="date-grid">
+                    <div class="form-group">
+                        <label for="startDate">Start Date</label>
+                        <input type="date" id="startDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endDate">End Date</label>
+                        <input type="date" id="endDate" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">Continue to Color Legend →</button>
+            </form>
+        </section>
     </div>
+    <script src="projectStore.js"></script>
     <script src="create.js"></script>
 </body>
 </html>

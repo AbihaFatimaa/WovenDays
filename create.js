@@ -19,10 +19,16 @@ document.addEventListener("DOMContentLoaded", () => {
             startDate: document.getElementById("startDate").value,
             endDate: document.getElementById("endDate").value,
             legend: [],
-            logs: {}
+            logs: {},
+            createdAt: Date.now(),
+            updatedAt: Date.now()
         };
 
-        localStorage.setItem("wovenDays_currentProject", JSON.stringify(projectData));
+        if (typeof wovendaysSaveProject === "function") {
+            wovendaysSaveProject(projectData);
+        } else {
+            localStorage.setItem("wovenDays_currentProject", JSON.stringify(projectData));
+        }
         window.location.href = "legend.html";
     });
 });

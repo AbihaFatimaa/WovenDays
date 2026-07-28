@@ -6,26 +6,54 @@
     <title>Color Legend | WovenDays</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="container container-wide">
-        <div class="header">
+<body class="setup-page">
+    <header class="site-masthead">
+        <a class="site-brand" href="index.html">
             <img src="assets/Object.png" alt="WovenDays logo" class="logo">
-            <div>
-                <h1 id="legendHeading">Define Color Legend</h1>
-                <p class="subtitle">Assign a yarn color to each value or range.</p>
+            <span class="brand-mark">WovenDays</span>
+        </a>
+    </header>
+    <div class="page-shell">
+        <aside class="setup-rail glass-panel">
+            <span class="eyebrow">Step 2 of 3</span>
+            <h1 id="legendHeading">Define Color Legend</h1>
+            <p>Assign yarn colors to the values you care about. The dashboard will use these rules to translate each log entry into a row.</p>
+
+            <div class="stepper">
+                <div class="stepper-item done"><span>1</span><div><strong>Project details</strong><p>Completed.</p></div></div>
+                <div class="stepper-item active"><span>2</span><div><strong>Color legend</strong><p>Choose labels and yarn colors.</p></div></div>
+                <div class="stepper-item"><span>3</span><div><strong>Dashboard</strong><p>Ready to log.</p></div></div>
             </div>
-        </div>
 
-        <form id="legendForm">
-            <div id="legendRows" class="legend-rows-container"></div>
-
-            <button type="button" id="addRowBtn" class="btn-secondary">+ Add Color Rule</button>
-
-            <div class="form-actions">
-                <button type="submit" class="btn-primary">Finish & Launch Dashboard →</button>
+            <div class="rail-note">
+                <strong>Smart start</strong>
+                <p>Temperature, Reading, Mood, Fitness, and Hydration projects load with helpful starter rules you can edit before launch.</p>
             </div>
-        </form>
+        </aside>
+
+        <section class="setup-card glass-panel">
+            <div class="header header-stack">
+                <div>
+                    <span class="eyebrow">Setup</span>
+                    <p class="subtitle">Assign a yarn color to each value or range.</p>
+                </div>
+            </div>
+
+            <form id="legendForm">
+                <div id="legendRows" class="legend-rows-container"></div>
+
+                <div class="legend-actions">
+                    <button type="button" id="addRowBtn" class="btn-secondary">+ Add Color Rule</button>
+                    <span class="legend-hint">Tip: keep labels short so they fit comfortably in the dashboard and print view.</span>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Finish & Launch Dashboard →</button>
+                </div>
+            </form>
+        </section>
     </div>
+    <script src="projectStore.js"></script>
     <script src="legend.js"></script>
 </body>
 </html>

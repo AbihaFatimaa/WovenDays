@@ -1,11 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const projectRaw = localStorage.getItem("wovenDays_currentProject");
-    if (!projectRaw) {
+    const project = typeof wovendaysGetCurrentProject === "function"
+        ? wovendaysGetCurrentProject()
+        : JSON.parse(localStorage.getItem("wovenDays_currentProject"));
+
+    if (!project) {
         window.location.href = "create.html";
         return;
     }
 
-    const project = JSON.parse(projectRaw);
     const container = document.getElementById("legendRows");
     const addRowBtn = document.getElementById("addRowBtn");
     const legendForm = document.getElementById("legendForm");
@@ -99,7 +101,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         project.legend = legendItems;
-        localStorage.setItem("wovenDays_currentProject", JSON.stringify(project));
+        if (typeof wovendaysSaveProject === "function") {
+            wovendaysSaveProject(project);
+        } else {
+            localStorage.setItem("wovenDays_currentProject", JSON.stringify(project));
+        }
         window.location.href = "dashboard.html";
     });
 });
