@@ -6,15 +6,15 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #FAF5F5;
+    background-color: #f7e7e7;
     color: #3C3335;
     min-height: 100vh;
 }
 
 /* Common Logo Styles */
 .logo {
-    height: 45px;
-    width: 45px;
+    height: 42px;
+    width: 42px;
     display: block;
     flex-shrink: 0;
     object-fit: contain;
@@ -36,10 +36,9 @@ body {
     box-shadow: 0 8px 24px rgba(75, 52, 37, 0.08);
     text-decoration: none;
 }
-
 .site-brand .logo {
-    height: 36px;
-    width: 36px;
+    height: 30px;
+    width: 30px;
 }
 
 .site-brand .brand-mark {
@@ -73,7 +72,7 @@ body {
 }
 
 .hero .logo {
-    height: 45px;
+    height: 40px;
 }
 
 h1 {
@@ -282,8 +281,8 @@ input:focus, select:focus {
 }
 
 .nav-brand .logo {
-    height: 45px;
-    width: 45px;
+    height: 26px;
+    width: 26px;
 }
 
 .nav-actions {
